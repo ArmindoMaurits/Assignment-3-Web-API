@@ -396,3 +396,7 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+
+# ignore appSettings.Development.json
+/MovieCharactersApi/appSettings.Development.json
