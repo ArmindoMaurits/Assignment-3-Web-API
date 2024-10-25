@@ -40,6 +40,12 @@ public class Movie
     /// </summary>
     public string? TrailerUrl { get; set; }
 
-    // Should we have a list of Characters in this movie?
-    //public virtual ICollection<Character> Characters { get; set; } = new List<Character>();
+    /// <summary>
+    /// Characters that play in this movie
+    /// </summary>
+    public virtual ICollection<Character> Characters { get; set; } = new List<Character>();
+
+    public required int FranchiseId { get; set; }
+
+    public virtual required Franchise Franchise { get; set; }
 }

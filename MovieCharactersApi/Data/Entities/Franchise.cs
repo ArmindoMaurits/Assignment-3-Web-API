@@ -19,4 +19,10 @@ public class Franchise
     public required string Name { get; set; }
 
     public string? Description { get; set; }
+
+    /// <summary>
+    /// Movies in this franchise. For example the Marvel Cinematic Universe 
+    /// has Thor and Captain America.
+    /// </summary>
+    public virtual ICollection<Movie> Movies { get; set; } = new List<Movie>();
 }

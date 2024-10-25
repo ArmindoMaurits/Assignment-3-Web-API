@@ -21,6 +21,8 @@ public class Character
     /// </summary>
     public string? PictureUrl { get; set; }
 
-    // Should we have a list of movies this character is in?
-    //public virtual ICollection<Movie> Movies { get; set; } = new List<Movie>();
+    /// <summary>
+    /// Movies this character has played in.
+    /// </summary>
+    public virtual ICollection<Movie> Movies { get; set; } = new List<Movie>();
 }
