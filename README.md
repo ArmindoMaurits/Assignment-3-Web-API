@@ -6,7 +6,7 @@
 ```
 dotnet ef database update
 ```
-3. Optiomal: To add a new migration run the following command:
+3. Optional: To add a new migration run the following command:
 ```
 dotnet ef migrations add Initial_Migration
 ```
