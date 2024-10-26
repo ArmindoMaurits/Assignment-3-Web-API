@@ -47,5 +47,7 @@ public class Movie
 
     public required int FranchiseId { get; set; }
 
-    public virtual required Franchise Franchise { get; set; }
+    public virtual Franchise Franchise { get; set; }
+
+    public virtual ICollection<MovieCharacter> MovieCharacters { get; set; } = new List<MovieCharacter>();
 }

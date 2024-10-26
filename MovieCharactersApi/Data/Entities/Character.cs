@@ -25,4 +25,6 @@ public class Character
     /// Movies this character has played in.
     /// </summary>
     public virtual ICollection<Movie> Movies { get; set; } = new List<Movie>();
+
+    public virtual ICollection<MovieCharacter> MovieCharacters { get; set; } = new List<MovieCharacter>();
 }
