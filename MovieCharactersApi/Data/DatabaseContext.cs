@@ -38,6 +38,12 @@ public class DatabaseContext : DbContext
                     .HasForeignKey(mc => mc.MovieId)
             );
 
+        // FK should be settable to null, so it is not required.
+        modelBuilder.Entity<Movie>()
+            .HasOne(m => m.Franchise)
+            .WithMany(f => f.Movies)
+            .IsRequired(false);
+
         modelBuilder.Entity<Movie>()
             .HasOne(m => m.Franchise)
             .WithMany(f => f.Movies)
