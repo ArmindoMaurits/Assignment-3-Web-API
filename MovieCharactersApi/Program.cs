@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MovieCharactersApi.Data;
+using MovieCharactersApi.Services;
 
 namespace MovieCharactersApi;
 
@@ -17,8 +18,11 @@ public static class Program
         builder.Services.AddDbContextPool<DatabaseContext>(o =>
             o.UseSqlServer(configuration.GetConnectionString("MovieCharactersDatabase")));
 
-        var app = builder.Build();
+        builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+        builder.Services.AddScoped<CharactersService>();
+
+        var app = builder.Build();
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using MovieCharactersApi.Data;
 using MovieCharactersApi.Data.Entities;
@@ -8,10 +8,13 @@ namespace MovieCharactersApi.Services
     public class CharactersService
     {
         private readonly DatabaseContext _context;
+        private readonly IMapper _mapper;
 
-        public CharactersService(DatabaseContext context)
+        public CharactersService(DatabaseContext context,
+            IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<Character>> GetCharacters()

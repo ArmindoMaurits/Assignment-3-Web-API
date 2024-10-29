@@ -1,6 +1,6 @@
-@MovieCharactersApi_HostAddress = http://localhost:5075
+@MovieCharactersApi_HostAddress = http://localhost:5075/api
 
-GET {{MovieCharactersApi_HostAddress}}/weatherforecast/
+GET {{MovieCharactersApi_HostAddress}}/characters/
 Accept: application/json
 
 ###

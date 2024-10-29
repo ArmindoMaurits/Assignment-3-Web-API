@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieCharactersApi.Data;
 using MovieCharactersApi.Data.Entities;
+using MovieCharactersApi.Models.Responses;
+using MovieCharactersApi.Services;
 
 namespace MovieCharactersApi.Controllers
 {
@@ -15,31 +18,39 @@ namespace MovieCharactersApi.Controllers
     public class CharactersController : ControllerBase
     {
         private readonly DatabaseContext _context;
+        private readonly CharactersService _charactersService;
+        private readonly IMapper _mapper;
 
-        public CharactersController(DatabaseContext context)
+        public CharactersController(DatabaseContext context,
+            CharactersService charactersService,
+            IMapper mapper)
         {
             _context = context;
+            _charactersService = charactersService;
+            _mapper = mapper;
         }
 
         // GET: api/Characters
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Character>>> GetCharacters()
+        public async Task<ActionResult<IEnumerable<CharacterResponseDto>>> GetCharacters()
         {
-            return await _context.Characters.ToListAsync();
+            var characters = await _charactersService.GetCharacters();
+            var characterResponseDtos = _mapper.Map<IEnumerable<CharacterResponseDto>>(characters);
+
+            return characterResponseDtos.ToList();
         }
 
         // GET: api/Characters/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Character>> GetCharacter(int id)
+        public async Task<ActionResult<CharacterResponseDto>> GetCharacter(int id)
         {
-            var character = await _context.Characters.FindAsync(id);
-
+            var character = await _charactersService.GetCharacter(id);
             if (character == null)
             {
                 return NotFound();
             }
 
-            return character;
+            return _mapper.Map<CharacterResponseDto>(character);
         }
 
         // PUT: api/Characters/5
