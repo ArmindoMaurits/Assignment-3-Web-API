@@ -27,6 +27,19 @@ namespace MovieCharactersApi.Services
             return await _context.Characters.FindAsync(id);
         }
 
+        public async Task<Character?> UpdateCharacter(Character character)
+        {
+            if (!await CharacterExists(character.Id))
+            {
+                return null;
+            }
+
+            _context.Entry(character).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return character;
+        }
+
         public async Task<Character> CreateCharacter(Character character)
         {
             _context.Characters.Add(character);
@@ -49,9 +62,9 @@ namespace MovieCharactersApi.Services
             return true;
         }
 
-        private bool CharacterExists(int id)
+        private async Task<bool> CharacterExists(int id)
         {
-            return _context.Characters.Any(e => e.Id == id);
+            return await _context.Characters.AnyAsync(e => e.Id == id);
         }
     }
 }

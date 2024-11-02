@@ -28,7 +28,8 @@ namespace MovieCharactersApi.Profiles
                 .ForMember(
                     dest => dest.PictureUrl,
                     opt => opt.MapFrom(src => src.PictureUrl)
-                );
+                )
+                .ReverseMap();
 
             CreateMap<CharacterCreateRequestDto, Data.Entities.Character>()
                 .ForMember(

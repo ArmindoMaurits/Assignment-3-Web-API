@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MovieCharactersApi.Data;
 using MovieCharactersApi.Data.Entities;
+using MovieCharactersApi.Models.Requests;
 using MovieCharactersApi.Models.Responses;
 using MovieCharactersApi.Services;
 
@@ -17,15 +11,13 @@ namespace MovieCharactersApi.Controllers
     [ApiController]
     public class CharactersController : ControllerBase
     {
-        private readonly DatabaseContext _context;
         private readonly CharactersService _charactersService;
         private readonly IMapper _mapper;
 
-        public CharactersController(DatabaseContext context,
+        public CharactersController(
             CharactersService charactersService,
             IMapper mapper)
         {
-            _context = context;
             _charactersService = charactersService;
             _mapper = mapper;
         }
@@ -56,29 +48,19 @@ namespace MovieCharactersApi.Controllers
         // PUT: api/Characters/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCharacter(int id, Character character)
+        public async Task<IActionResult> PutCharacter(
+            int id, CharacterResponseDto characterToBeUpdated)
         {
-            if (id != character.Id)
+            if (id != characterToBeUpdated.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(character).State = EntityState.Modified;
-
-            try
+            var character = _mapper.Map<Character>(characterToBeUpdated);
+            var updatedCharacter = await _charactersService.UpdateCharacter(character);
+            if (updatedCharacter == null)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CharacterExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return NoContent();
@@ -87,33 +69,29 @@ namespace MovieCharactersApi.Controllers
         // POST: api/Characters
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Character>> PostCharacter(Character character)
+        public async Task<ActionResult<Character>> PostCharacter(
+            CharacterCreateRequestDto characterCreateRequestDto)
         {
-            _context.Characters.Add(character);
-            await _context.SaveChangesAsync();
+            var character = _mapper.Map<Character>(characterCreateRequestDto);
+            var createdCharacter = await _charactersService.CreateCharacter(character);
 
-            return CreatedAtAction("GetCharacter", new { id = character.Id }, character);
+            return CreatedAtAction("GetCharacter", 
+                new { id = createdCharacter.Id }, 
+                createdCharacter);
         }
 
         // DELETE: api/Characters/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCharacter(int id)
         {
-            var character = await _context.Characters.FindAsync(id);
-            if (character == null)
+            var deleted = await _charactersService.DeleteCharacter(id);
+
+            if (!deleted)
             {
                 return NotFound();
             }
 
-            _context.Characters.Remove(character);
-            await _context.SaveChangesAsync();
-
             return NoContent();
-        }
-
-        private bool CharacterExists(int id)
-        {
-            return _context.Characters.Any(e => e.Id == id);
         }
     }
 }
