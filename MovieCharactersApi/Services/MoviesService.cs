@@ -21,7 +21,9 @@ public class MoviesService
 
     public async Task<Movie?> GetMovie(int id)
     {
-        return await _context.Movies.FindAsync(id);
+        return await _context.Movies
+            .Include(m => m.Franchise)
+            .FirstOrDefaultAsync(m => m.Id == id);
     }
 
     public async Task<Movie?> UpdateMovie(Movie movie)

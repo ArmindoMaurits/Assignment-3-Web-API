@@ -3,6 +3,7 @@ using MovieCharactersApi.Models.Requests;
 using MovieCharactersApi.Models.Responses;
 
 namespace MovieCharactersApi.Profiles;
+
 public class MovieMappingProfile : Profile
 {
     public MovieMappingProfile()
@@ -39,10 +40,6 @@ public class MovieMappingProfile : Profile
             .ForMember(
                 dest => dest.Characters,
                 opt => opt.MapFrom(src => src.Characters)
-            )
-            .ForMember(
-                dest => dest.FranchiseId,
-                opt => opt.MapFrom(src => src.FranchiseId)
             )
             .ForMember(
                 dest => dest.Franchise,
