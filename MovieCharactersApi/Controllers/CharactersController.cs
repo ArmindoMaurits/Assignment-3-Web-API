@@ -4,7 +4,6 @@ using MovieCharactersApi.Data.Entities;
 using MovieCharactersApi.Models.Requests;
 using MovieCharactersApi.Models.Responses;
 using MovieCharactersApi.Services;
-using System.Net;
 
 namespace MovieCharactersApi.Controllers
 {

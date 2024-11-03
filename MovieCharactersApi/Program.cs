@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using MovieCharactersApi.Data;
 using MovieCharactersApi.Services;
+using System.Reflection;
 
 namespace MovieCharactersApi;
 
@@ -12,7 +14,18 @@ public static class Program
 
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+        builder.Services.AddSwaggerGen(options =>
+        {
+            options.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Version = "v1",
+                Title = "MovieCharactersAPI",
+                Description = "API for movie characters",
+            });
+
+            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+        });
 
         var configuration = builder.Configuration;
         builder.Services.AddDbContextPool<DatabaseContext>(o =>
