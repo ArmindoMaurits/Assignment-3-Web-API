@@ -400,3 +400,4 @@ FodyWeavers.xsd
 
 # ignore appSettings.Development.json
 /MovieCharactersApi/appSettings.Development.json
+MovieCharactersApi/appsettings.Development.json
