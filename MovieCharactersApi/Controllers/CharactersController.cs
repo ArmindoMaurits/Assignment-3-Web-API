@@ -4,6 +4,7 @@ using MovieCharactersApi.Data.Entities;
 using MovieCharactersApi.Models.Requests;
 using MovieCharactersApi.Models.Responses;
 using MovieCharactersApi.Services;
+using System.Net;
 
 namespace MovieCharactersApi.Controllers
 {
@@ -22,7 +23,12 @@ namespace MovieCharactersApi.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Gets all characters.
+        /// </summary>
+        /// <returns>List of CharacterResponseDtos</returns>
         // GET: api/Characters
+        [ProducesResponseType(typeof(IEnumerable<CharacterResponseDto>), StatusCodes.Status200OK)]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CharacterResponseDto>>> GetCharacters()
         {
@@ -32,7 +38,14 @@ namespace MovieCharactersApi.Controllers
             return characterResponseDtos.ToList();
         }
 
+        /// <summary>
+        /// Gets a character by id.
+        /// </summary>
+        /// <param name="id">ID of the Character</param>
+        /// <returns>CharacterResponseDto if found, otherwise 404.</returns>
         // GET: api/Characters/5
+        [ProducesResponseType(typeof(CharacterResponseDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("{id}")]
         public async Task<ActionResult<CharacterResponseDto>> GetCharacter(int id)
         {
@@ -45,9 +58,17 @@ namespace MovieCharactersApi.Controllers
             return _mapper.Map<CharacterResponseDto>(character);
         }
 
+        /// <summary>
+        /// Updates a character by id.
+        /// </summary>
+        /// <param name="id">ID of the character</param>
+        /// <param name="characterToBeUpdated">Character to be updated</param>
+        /// <returns>204 if updated, 404 if not found or 400 if ID wasn't correct.</returns>
         // PUT: api/Characters/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> PutCharacter(
             int id, CharacterResponseDto characterToBeUpdated)
         {
@@ -66,8 +87,13 @@ namespace MovieCharactersApi.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Creates a new character.
+        /// </summary>
+        /// <param name="characterCreateRequestDto">The character to be created</param>
+        /// <returns>The newly created Character.</returns>
         // POST: api/Characters
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [HttpPost]
         public async Task<ActionResult<CharacterResponseDto>> PostCharacter(
             CharacterCreateRequestDto characterCreateRequestDto)
@@ -81,8 +107,15 @@ namespace MovieCharactersApi.Controllers
                 characterResponseDto);
         }
 
+        /// <summary>
+        /// Deletes a character by id.
+        /// </summary>
+        /// <param name="id">ID of the character</param>
+        /// <returns>204 if deleted, 404 if character wasn't found by given ID</returns>
         // DELETE: api/Characters/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteCharacter(int id)
         {
             var deleted = await _charactersService.DeleteCharacter(id);
