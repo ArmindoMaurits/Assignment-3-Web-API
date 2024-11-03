@@ -11,11 +11,11 @@ namespace MovieCharactersApi.Controllers
     [ApiController]
     public class CharactersController : ControllerBase
     {
-        private readonly CharactersService _charactersService;
+        private readonly ICharactersService _charactersService;
         private readonly IMapper _mapper;
 
         public CharactersController(
-            CharactersService charactersService,
+            ICharactersService charactersService,
             IMapper mapper)
         {
             _charactersService = charactersService;

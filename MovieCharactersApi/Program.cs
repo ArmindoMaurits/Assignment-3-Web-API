@@ -20,7 +20,7 @@ public static class Program
 
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-        builder.Services.AddScoped<CharactersService>();
+        builder.Services.AddScoped<ICharactersService, CharactersService>();
         builder.Services.AddScoped<MoviesService>();
 
         var app = builder.Build();

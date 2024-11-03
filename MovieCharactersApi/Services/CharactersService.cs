@@ -5,7 +5,7 @@ using MovieCharactersApi.Data.Entities;
 
 namespace MovieCharactersApi.Services
 {
-    public class CharactersService
+    public class CharactersService : ICharactersService
     {
         private readonly DatabaseContext _context;
 
