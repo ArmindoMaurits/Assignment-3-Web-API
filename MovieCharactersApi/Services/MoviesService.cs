@@ -16,13 +16,17 @@ public class MoviesService
 
     public async Task<IEnumerable<Movie>> GetMovies()
     {
-        return await _context.Movies.ToListAsync();
+        return await _context.Movies
+            .Include(m => m.Franchise)
+            .Include(m => m.Characters)
+            .ToListAsync();
     }
 
     public async Task<Movie?> GetMovie(int id)
     {
         return await _context.Movies
             .Include(m => m.Franchise)
+            .Include(m => m.Characters)
             .FirstOrDefaultAsync(m => m.Id == id);
     }
 
