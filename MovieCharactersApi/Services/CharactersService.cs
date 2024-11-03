@@ -8,13 +8,10 @@ namespace MovieCharactersApi.Services
     public class CharactersService
     {
         private readonly DatabaseContext _context;
-        private readonly IMapper _mapper;
 
-        public CharactersService(DatabaseContext context,
-            IMapper mapper)
+        public CharactersService(DatabaseContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         public async Task<IEnumerable<Character>> GetCharacters()

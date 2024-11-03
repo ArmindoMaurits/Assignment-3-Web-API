@@ -69,15 +69,16 @@ namespace MovieCharactersApi.Controllers
         // POST: api/Characters
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Character>> PostCharacter(
+        public async Task<ActionResult<CharacterResponseDto>> PostCharacter(
             CharacterCreateRequestDto characterCreateRequestDto)
         {
             var character = _mapper.Map<Character>(characterCreateRequestDto);
             var createdCharacter = await _charactersService.CreateCharacter(character);
+            var characterResponseDto = _mapper.Map<CharacterResponseDto>(createdCharacter);
 
             return CreatedAtAction("GetCharacter", 
-                new { id = createdCharacter.Id }, 
-                createdCharacter);
+                new { id = characterResponseDto.Id },
+                characterResponseDto);
         }
 
         // DELETE: api/Characters/5
