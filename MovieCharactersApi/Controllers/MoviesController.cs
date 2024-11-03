@@ -48,7 +48,7 @@ namespace MovieCharactersApi.Controllers
         // PUT: api/Movies/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMovie(int id, 
+        public async Task<IActionResult> PutMovie(int id,
             MovieResponseDto movieToBeUpdated)
         {
             if (id != movieToBeUpdated.Id)
@@ -59,6 +59,26 @@ namespace MovieCharactersApi.Controllers
             var movie = _mapper.Map<Movie>(movieToBeUpdated);
             var updatedMovie = await _moviesService.UpdateMovie(movie);
             if (updatedMovie == null)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+
+        // PATCH: api/Movies/5/Characters
+        [HttpPatch("{id}/Characters")]
+        public async Task<IActionResult> PatchCharactersInMovie(int id,
+            CharactersInMovieUpdateRequestDto charactersInMovieUpdateRequestDto)
+        {
+            if (!charactersInMovieUpdateRequestDto.CharacterIds.Any())
+            {
+                return BadRequest();
+            }
+
+            var updated = await _moviesService.UpdateCharactersInMovie(id,
+                charactersInMovieUpdateRequestDto.CharacterIds);
+            if (!updated)
             {
                 return NotFound();
             }
