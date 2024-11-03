@@ -4,7 +4,7 @@ using MovieCharactersApi.Data.Entities;
 
 namespace MovieCharactersApi.Services;
 
-public class MoviesService
+public class MoviesService : IMoviesService
 {
     private readonly DatabaseContext _context;
 
@@ -84,7 +84,7 @@ public class MoviesService
     /// <param name="id"></param>
     /// <param name="characterIds"></param>
     /// <returns>True if set, false if no movie was found by given ID.</returns>
-    public async Task<bool> UpdateCharactersInMovie(int id, 
+    public async Task<bool> UpdateCharactersInMovie(int id,
         IEnumerable<int> characterIds)
     {
         if (!await MovieExists(id))

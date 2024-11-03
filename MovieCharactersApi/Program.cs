@@ -34,7 +34,7 @@ public static class Program
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
         builder.Services.AddScoped<ICharactersService, CharactersService>();
-        builder.Services.AddScoped<MoviesService>();
+        builder.Services.AddScoped<IMoviesService, MoviesService>();
 
         var app = builder.Build();
         // Configure the HTTP request pipeline.
