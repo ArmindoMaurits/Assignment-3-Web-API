@@ -4,6 +4,9 @@ namespace MovieCharactersApi.Models.Responses
 {
     public class MovieResponseDto
     {
+        /// <summary>
+        /// ID of the movie
+        /// </summary>
         public int Id { get; set; }
 
         /// <summary>
@@ -42,6 +45,9 @@ namespace MovieCharactersApi.Models.Responses
         /// </summary>
         public IEnumerable<CharacterResponseDto> Characters { get; set; } = new List<CharacterResponseDto>();
 
+        /// <summary>
+        /// Franchise this movie is in
+        /// </summary>
         public FranchiseWithoutMoviesResponseDto? Franchise { get; set; }
     }
 }
