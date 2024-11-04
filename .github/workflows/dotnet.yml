@@ -24,3 +24,5 @@ jobs:
       run: dotnet restore MovieCharactersApi
     - name: Build
       run: dotnet build MovieCharactersApi --no-restore
+    - name: Publish to container
+      run: dotnet publish MovieCharactersApi /t:PublishContainer -r linux-x64
