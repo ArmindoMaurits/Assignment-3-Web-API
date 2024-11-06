@@ -20,17 +20,19 @@ public class FranchiseMappingProfile : Profile
                 dest => dest.Description,
                 opt => opt.MapFrom(src => src.Description)
             )
-            .ForMember(
-                dest => dest.Movies,
-                opt => opt.MapFrom(src => src.Movies)
-            )
             .ReverseMap();
 
-        CreateMap<Data.Entities.Franchise, FranchiseWithoutMoviesResponseDto>()
+        CreateMap<Models.Requests.FranchiseCreateRequestDto, Data.Entities.Franchise>()
             .ForMember(
-                dest => dest.Id,
-                opt => opt.MapFrom(src => src.Id)
+                dest => dest.Name,
+                opt => opt.MapFrom(src => src.Name)
             )
+            .ForMember(
+                dest => dest.Description,
+                opt => opt.MapFrom(src => src.Description)
+            );
+
+        CreateMap<Models.Requests.FranchiseUpdateRequest, Data.Entities.Franchise>()
             .ForMember(
                 dest => dest.Name,
                 opt => opt.MapFrom(src => src.Name)

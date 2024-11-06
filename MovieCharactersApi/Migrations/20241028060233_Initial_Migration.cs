@@ -95,12 +95,12 @@ namespace MovieCharactersApi.Migrations
                 columns: new[] { "Id", "Alias", "FullName", "Gender", "PictureUrl" },
                 values: new object[,]
                 {
-                    { 1, null, "Tony Stark", 0, null },
-                    { 2, null, "Pepper Potts", 0, null },
-                    { 3, null, "Thor", 0, null },
-                    { 4, null, "Loki", 0, null },
-                    { 5, null, "Frodo Baggins", 0, null },
-                    { 6, null, "Aragorn", 0, null }
+                    { 1, null, "Tony Stark", 1, null },
+                    { 2, null, "Pepper Potts", 1, null },
+                    { 3, null, "Thor", 1, null },
+                    { 4, null, "Loki", 1, null },
+                    { 5, null, "Frodo Baggins", 1, null },
+                    { 6, null, "Aragorn", 1, null }
                 });
 
             migrationBuilder.InsertData(

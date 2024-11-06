@@ -70,5 +70,27 @@ public class CharacterMappingProfile : Profile
                 dest => dest.PictureUrl,
                 opt => opt.MapFrom(src => src.PictureUrl)
             );
+
+        CreateMap<Data.Entities.Character, CharacterInFranchiseDto>()
+            .ForMember(
+                dest => dest.Id,
+                opt => opt.MapFrom(src => src.Id)
+            )
+            .ForMember(
+                dest => dest.FullName,
+                opt => opt.MapFrom(src => src.FullName)
+            )
+            .ForMember(
+                dest => dest.Alias,
+                opt => opt.MapFrom(src => src.Alias)
+            )
+            .ForMember(
+                dest => dest.Gender,
+                opt => opt.MapFrom(src => src.Gender)
+            )
+            .ForMember(
+                dest => dest.PictureUrl,
+                opt => opt.MapFrom(src => src.PictureUrl)
+            );
     }
 }

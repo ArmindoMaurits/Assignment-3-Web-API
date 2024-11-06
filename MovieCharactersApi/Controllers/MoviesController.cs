@@ -23,6 +23,7 @@ namespace MovieCharactersApi.Controllers
         }
 
         // GET: api/Movies
+        [ProducesResponseType(typeof(IEnumerable<MovieResponseDto>), StatusCodes.Status200OK)]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MovieResponseDto>>> GetMovies()
         {
@@ -33,6 +34,8 @@ namespace MovieCharactersApi.Controllers
         }
 
         // GET: api/Movies/5
+        [ProducesResponseType(typeof(MovieResponseDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("{id}")]
         public async Task<ActionResult<MovieResponseDto>> GetMovie(int id)
         {
@@ -46,10 +49,12 @@ namespace MovieCharactersApi.Controllers
         }
 
         // PUT: api/Movies/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMovie(int id,
-            MovieResponseDto movieToBeUpdated)
+            MovieUpdateRequestDto movieToBeUpdated)
         {
             if (id != movieToBeUpdated.Id)
             {
@@ -67,6 +72,9 @@ namespace MovieCharactersApi.Controllers
         }
 
         // PATCH: api/Movies/5/Characters
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpPatch("{id}/Characters")]
         public async Task<IActionResult> PatchCharactersInMovie(int id,
             CharactersInMovieUpdateRequestDto charactersInMovieUpdateRequestDto)
@@ -87,7 +95,7 @@ namespace MovieCharactersApi.Controllers
         }
 
         // POST: api/Movies
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [ProducesResponseType(typeof(MovieResponseDto), StatusCodes.Status201Created)]
         [HttpPost]
         public async Task<ActionResult<MovieResponseDto>> PostMovie(
             MovieCreateRequestDto movieCreateRequestDto)
@@ -102,6 +110,8 @@ namespace MovieCharactersApi.Controllers
         }
 
         // DELETE: api/Movies/5
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMovie(int id)
         {

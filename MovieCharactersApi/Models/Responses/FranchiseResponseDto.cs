@@ -16,9 +16,4 @@ public class FranchiseResponseDto
     /// Description of the franchise
     /// </summary>
     public string? Description { get; set; }
-
-    /// <summary>
-    /// Movies in this franchise
-    /// </summary>
-    public IEnumerable<MovieResponseDto> Movies { get; set; } = new List<MovieResponseDto>();
 }

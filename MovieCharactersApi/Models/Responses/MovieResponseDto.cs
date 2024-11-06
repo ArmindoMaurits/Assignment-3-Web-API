@@ -48,6 +48,6 @@ namespace MovieCharactersApi.Models.Responses
         /// <summary>
         /// Franchise this movie is in
         /// </summary>
-        public FranchiseWithoutMoviesResponseDto? Franchise { get; set; }
+        public FranchiseResponseDto? Franchise { get; set; }
     }
 }

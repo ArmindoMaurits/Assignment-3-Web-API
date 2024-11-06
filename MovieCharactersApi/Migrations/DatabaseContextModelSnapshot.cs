@@ -52,37 +52,37 @@ namespace MovieCharactersApi.Migrations
                         {
                             Id = 1,
                             FullName = "Tony Stark",
-                            Gender = 0
+                            Gender = 1
                         },
                         new
                         {
                             Id = 2,
                             FullName = "Pepper Potts",
-                            Gender = 0
+                            Gender = 1
                         },
                         new
                         {
                             Id = 3,
                             FullName = "Thor",
-                            Gender = 0
+                            Gender = 1
                         },
                         new
                         {
                             Id = 4,
                             FullName = "Loki",
-                            Gender = 0
+                            Gender = 1
                         },
                         new
                         {
                             Id = 5,
                             FullName = "Frodo Baggins",
-                            Gender = 0
+                            Gender = 1
                         },
                         new
                         {
                             Id = 6,
                             FullName = "Aragorn",
-                            Gender = 0
+                            Gender = 1
                         });
                 });
 
