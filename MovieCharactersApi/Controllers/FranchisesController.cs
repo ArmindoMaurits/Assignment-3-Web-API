@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MovieCharactersApi.Data.Entities;
+using MovieCharactersApi.Models.Responses;
 using MovieCharactersApi.Services;
 
 namespace MovieCharactersApi.Controllers
@@ -24,6 +25,7 @@ namespace MovieCharactersApi.Controllers
         }
 
         // GET: api/Franchises
+        [ProducesResponseType(typeof(IEnumerable<Franchise>), StatusCodes.Status200OK)]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Franchise>>> GetFranchises()
         {
@@ -33,6 +35,8 @@ namespace MovieCharactersApi.Controllers
         }
 
         // GET: api/Franchises/5
+        [ProducesResponseType(typeof(Franchise), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("{id}")]
         public async Task<ActionResult<Franchise>> GetFranchise(int id)
         {
@@ -46,6 +50,9 @@ namespace MovieCharactersApi.Controllers
         }
 
         // PUT: api/Franchises/5
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutFranchise(int id, 
             Franchise franchise)
@@ -65,6 +72,7 @@ namespace MovieCharactersApi.Controllers
         }
 
         // POST: api/Franchises
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [HttpPost]
         public async Task<ActionResult<Franchise>> PostFranchise(Franchise franchise)
         {
@@ -77,6 +85,8 @@ namespace MovieCharactersApi.Controllers
         }
 
         // DELETE: api/Franchises/5
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFranchise(int id)
         {
@@ -87,6 +97,28 @@ namespace MovieCharactersApi.Controllers
             }
 
             return NoContent();
+        }
+
+        // GET: api/Franchises/5/movies
+        [ProducesResponseType(typeof(IEnumerable<Movie>), StatusCodes.Status200OK)]
+        [HttpGet("{id}/movies")]
+        public async Task<ActionResult<IEnumerable<Movie>>> GetMoviesInFranchise(int id)
+        {
+            var movies = await _franchiseService.GetMoviesInFranchise(id);
+            // Map to MovieInFranchiseDto
+
+            return movies.ToList();
+        }
+
+        // GET: api/Franchises/5/characters
+        [ProducesResponseType(typeof(IEnumerable<Character>), StatusCodes.Status200OK)]
+        [HttpGet("{id}/characters")]
+        public async Task<ActionResult<IEnumerable<Character>>> GetCharactersInFranchise(int id)
+        {
+            var characters = await _franchiseService.GetCharactersInFranchise(id);
+            // Map to CharacterInFranchiseDto
+
+            return characters.ToList();
         }
     }
 }

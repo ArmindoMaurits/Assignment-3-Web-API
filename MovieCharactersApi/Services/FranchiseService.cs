@@ -17,7 +17,6 @@ public class FranchiseService : IFranchiseService
     {
         return await _context
             .Franchises
-            //.Include(f => f.Movies)
             .ToListAsync();
     }
 
@@ -25,8 +24,23 @@ public class FranchiseService : IFranchiseService
     {
         return await _context
             .Franchises
-            //.Include(f => f.Movies)
             .FirstOrDefaultAsync(f => f.Id == id);
+    }
+
+    public async Task<IEnumerable<Movie>> GetMoviesInFranchise(int franchiseId)
+    {
+        return await _context
+            .Movies
+            .Where(m => m.FranchiseId == franchiseId)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Character>> GetCharactersInFranchise(int franchiseId)
+    {
+        return await _context
+            .Characters
+            .Where(c => c.Movies.Any(m => m.FranchiseId == franchiseId))
+            .ToListAsync();
     }
 
     public async Task<Franchise?> UpdateFranchise(Franchise franchise)
