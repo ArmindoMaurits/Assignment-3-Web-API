@@ -122,5 +122,28 @@ namespace MovieCharactersApi.Controllers
 
             return characterInFranchiseDto.ToList();
         }
+
+        // PATCH: api/Franchises/5/Movies
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [HttpPatch("{id}/movies")]
+        public async Task<IActionResult> PatchMoviesInFranchise(int id,
+            MoviesInFranchiseUpdateRequestDto moviesInFranchiseUpdateRequestDto)
+        {
+            if (!moviesInFranchiseUpdateRequestDto.MovieIds.Any())
+            {
+                return BadRequest();
+            }
+
+            var updated = await _franchiseService.UpdateMoviesInFranchise(id,
+                moviesInFranchiseUpdateRequestDto.MovieIds);
+            if (!updated)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
     }
 }

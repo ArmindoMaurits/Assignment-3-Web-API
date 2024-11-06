@@ -82,4 +82,25 @@ public class FranchiseService : IFranchiseService
     {
         return await _context.Franchises.AnyAsync(e => e.Id == id);
     }
+
+    public async Task<bool> UpdateMoviesInFranchise(int id, IEnumerable<int> movieIds)
+    {
+        var franchise = await _context.Franchises
+            .Include(f => f.Movies)
+            .FirstOrDefaultAsync(f => f.Id == id);
+
+        if (franchise == null)
+        {
+            return false;
+        }
+
+        franchise.Movies.Clear();
+        franchise.Movies = await _context.Movies
+            .Where(m => movieIds.Contains(m.Id))
+            .ToListAsync();
+
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
 }

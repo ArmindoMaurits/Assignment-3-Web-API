@@ -51,5 +51,13 @@ namespace MovieCharactersApi.Services
         /// <param name="franchiseId">ID of the franchise</param>
         /// <returns>List of characters in that given franchise</returns>
         Task<IEnumerable<Character>> GetCharactersInFranchise(int franchiseId);
+
+        /// <summary>
+        /// Update movies in a franchise
+        /// </summary>
+        /// <param name="id">ID of the franchise</param>
+        /// <param name="movieIds">IDs of the movie</param>
+        /// <returns>True if updated, false otherwise.</returns>
+        Task<bool> UpdateMoviesInFranchise(int id, IEnumerable<int> movieIds);
     }
 }
