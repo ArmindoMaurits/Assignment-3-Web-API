@@ -35,6 +35,7 @@ public static class Program
 
         builder.Services.AddScoped<ICharactersService, CharactersService>();
         builder.Services.AddScoped<IMoviesService, MoviesService>();
+        builder.Services.AddScoped<IFranchiseService, FranchiseService>();
 
         var app = builder.Build();
         // Configure the HTTP request pipeline.
