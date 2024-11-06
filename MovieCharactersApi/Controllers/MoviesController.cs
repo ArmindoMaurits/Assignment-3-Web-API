@@ -49,7 +49,7 @@ namespace MovieCharactersApi.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMovie(int id,
-            MovieResponseDto movieToBeUpdated)
+            MovieUpdateRequestDto movieToBeUpdated)
         {
             if (id != movieToBeUpdated.Id)
             {

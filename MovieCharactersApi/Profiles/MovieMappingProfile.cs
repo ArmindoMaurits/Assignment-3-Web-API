@@ -47,6 +47,37 @@ public class MovieMappingProfile : Profile
             )
             .ReverseMap();
 
+        CreateMap<Data.Entities.Movie, MovieUpdateRequestDto>()
+            .ForMember(
+                dest => dest.Id,
+                opt => opt.MapFrom(src => src.Id)
+            )
+            .ForMember(
+                dest => dest.Title,
+                opt => opt.MapFrom(src => src.Title)
+            )
+            .ForMember(
+                dest => dest.Genre,
+                opt => opt.MapFrom(src => src.Genre)
+            )
+            .ForMember(
+                dest => dest.ReleaseYear,
+                opt => opt.MapFrom(src => src.ReleaseYear)
+            )
+            .ForMember(
+                dest => dest.Director,
+                opt => opt.MapFrom(src => src.Director)
+            )
+            .ForMember(
+                dest => dest.PictureUrl,
+                opt => opt.MapFrom(src => src.PictureUrl)
+            )
+            .ForMember(
+                dest => dest.TrailerUrl,
+                opt => opt.MapFrom(src => src.TrailerUrl)
+            )
+            .ReverseMap();
+
         CreateMap<MovieCreateRequestDto, Data.Entities.Movie>()
             .ForMember(
                 dest => dest.Title,
