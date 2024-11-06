@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MovieCharactersApi.Data.Entities;
 using MovieCharactersApi.Models.Responses;
@@ -25,20 +21,21 @@ namespace MovieCharactersApi.Controllers
         }
 
         // GET: api/Franchises
-        [ProducesResponseType(typeof(IEnumerable<Franchise>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<FranchiseResponseDto>), StatusCodes.Status200OK)]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Franchise>>> GetFranchises()
+        public async Task<ActionResult<IEnumerable<FranchiseResponseDto>>> GetFranchises()
         {
             var franchises = await _franchiseService.GetFranchises();
+            var franchiseResponseDtos = _mapper.Map<IEnumerable<FranchiseResponseDto>>(franchises);
 
-            return franchises.ToList();
+            return franchiseResponseDtos.ToList();
         }
 
         // GET: api/Franchises/5
-        [ProducesResponseType(typeof(Franchise), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(FranchiseResponseDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Franchise>> GetFranchise(int id)
+        public async Task<ActionResult<FranchiseResponseDto>> GetFranchise(int id)
         {
             var franchise = await _franchiseService.GetFranchise(id);
             if (franchise == null)
@@ -46,7 +43,7 @@ namespace MovieCharactersApi.Controllers
                 return NotFound();
             }
 
-            return franchise;
+            return _mapper.Map<FranchiseResponseDto>(franchise);
         }
 
         // PUT: api/Franchises/5
@@ -74,14 +71,15 @@ namespace MovieCharactersApi.Controllers
         // POST: api/Franchises
         [ProducesResponseType(StatusCodes.Status201Created)]
         [HttpPost]
-        public async Task<ActionResult<Franchise>> PostFranchise(Franchise franchise)
+        public async Task<ActionResult<FranchiseResponseDto>> PostFranchise(
+            Franchise franchise)
         {
             var createdFranchise = await _franchiseService.CreateFranchise(franchise);
-
+            var franchiseResponseDto = _mapper.Map<FranchiseResponseDto>(createdFranchise);
 
             return CreatedAtAction("GetFranchise", 
-                new { id = createdFranchise.Id }, 
-                createdFranchise);
+                new { id = franchiseResponseDto.Id },
+                franchiseResponseDto);
         }
 
         // DELETE: api/Franchises/5
