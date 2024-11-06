@@ -76,5 +76,35 @@ public class MovieMappingProfile : Profile
                 dest => dest.FranchiseId,
                 opt => opt.MapFrom(src => src.FranchiseId)
             );
+
+        CreateMap<Data.Entities.Movie, MovieInFranchiseDto>()
+            .ForMember(
+                dest => dest.Id,
+                opt => opt.MapFrom(src => src.Id)
+            )
+            .ForMember(
+                dest => dest.Title,
+                opt => opt.MapFrom(src => src.Title)
+            )
+            .ForMember(
+                dest => dest.Genre,
+                opt => opt.MapFrom(src => src.Genre)
+            )
+            .ForMember(
+                dest => dest.ReleaseYear,
+                opt => opt.MapFrom(src => src.ReleaseYear)
+            )
+            .ForMember(
+                dest => dest.Director,
+                opt => opt.MapFrom(src => src.Director)
+            )
+            .ForMember(
+                dest => dest.PictureUrl,
+                opt => opt.MapFrom(src => src.PictureUrl)
+            )
+            .ForMember(
+                dest => dest.TrailerUrl,
+                opt => opt.MapFrom(src => src.TrailerUrl)
+            );
     }
 }

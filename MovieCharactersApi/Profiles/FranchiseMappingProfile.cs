@@ -20,10 +20,10 @@ public class FranchiseMappingProfile : Profile
                 dest => dest.Description,
                 opt => opt.MapFrom(src => src.Description)
             )
-            .ForMember(
-                dest => dest.Movies,
-                opt => opt.MapFrom(src => src.Movies)
-            )
+            //.ForMember(
+            //    dest => dest.Movies,
+            //    opt => opt.MapFrom(src => src.Movies)
+            //)
             .ReverseMap();
 
         CreateMap<Data.Entities.Franchise, FranchiseWithoutMoviesResponseDto>()

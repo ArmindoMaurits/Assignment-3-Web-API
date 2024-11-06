@@ -3,6 +3,7 @@ using Microsoft.OpenApi.Models;
 using MovieCharactersApi.Data;
 using MovieCharactersApi.Services;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace MovieCharactersApi;
 
@@ -12,7 +13,11 @@ public static class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddControllers();
+        builder.Services.AddControllers().AddJsonOptions(o =>
+        {
+            o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+            o.JsonSerializerOptions.MaxDepth = 0;
+        });
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(options =>
         {

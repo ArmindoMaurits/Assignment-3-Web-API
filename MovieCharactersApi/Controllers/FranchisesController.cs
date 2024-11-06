@@ -100,25 +100,27 @@ namespace MovieCharactersApi.Controllers
         }
 
         // GET: api/Franchises/5/movies
-        [ProducesResponseType(typeof(IEnumerable<Movie>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<MovieInFranchiseDto>), StatusCodes.Status200OK)]
         [HttpGet("{id}/movies")]
-        public async Task<ActionResult<IEnumerable<Movie>>> GetMoviesInFranchise(int id)
+        public async Task<ActionResult<IEnumerable<MovieInFranchiseDto>>> GetMoviesInFranchise(int id)
         {
             var movies = await _franchiseService.GetMoviesInFranchise(id);
-            // Map to MovieInFranchiseDto
+            var movieInFranchiseDtos = movies
+                .Select(m => _mapper.Map<MovieInFranchiseDto>(m));
 
-            return movies.ToList();
+            return movieInFranchiseDtos.ToList();
         }
 
         // GET: api/Franchises/5/characters
-        [ProducesResponseType(typeof(IEnumerable<Character>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<CharacterInFranchiseDto>), StatusCodes.Status200OK)]
         [HttpGet("{id}/characters")]
-        public async Task<ActionResult<IEnumerable<Character>>> GetCharactersInFranchise(int id)
+        public async Task<ActionResult<IEnumerable<CharacterInFranchiseDto>>> GetCharactersInFranchise(int id)
         {
             var characters = await _franchiseService.GetCharactersInFranchise(id);
-            // Map to CharacterInFranchiseDto
+            var characterInFranchiseDto = characters
+                .Select(m => _mapper.Map<CharacterInFranchiseDto>(m));
 
-            return characters.ToList();
+            return characterInFranchiseDto.ToList();
         }
     }
 }
