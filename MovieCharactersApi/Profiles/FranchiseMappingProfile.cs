@@ -21,5 +21,25 @@ public class FranchiseMappingProfile : Profile
                 opt => opt.MapFrom(src => src.Description)
             )
             .ReverseMap();
+
+        CreateMap<Models.Requests.FranchiseCreateRequestDto, Data.Entities.Franchise>()
+            .ForMember(
+                dest => dest.Name,
+                opt => opt.MapFrom(src => src.Name)
+            )
+            .ForMember(
+                dest => dest.Description,
+                opt => opt.MapFrom(src => src.Description)
+            );
+
+        CreateMap<Models.Requests.FranchiseUpdateRequest, Data.Entities.Franchise>()
+            .ForMember(
+                dest => dest.Name,
+                opt => opt.MapFrom(src => src.Name)
+            )
+            .ForMember(
+                dest => dest.Description,
+                opt => opt.MapFrom(src => src.Description)
+            );
     }
 }

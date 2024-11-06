@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MovieCharactersApi.Data.Entities;
+using MovieCharactersApi.Models.Requests;
 using MovieCharactersApi.Models.Responses;
 using MovieCharactersApi.Services;
 
@@ -52,13 +53,13 @@ namespace MovieCharactersApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutFranchise(int id, 
-            Franchise franchise)
+            FranchiseUpdateRequest franchiseUpdateRequest)
         {
-            if (id != franchise.Id)
+            if (id != franchiseUpdateRequest.Id)
             {
                 return BadRequest();
             }
-
+            var franchise = _mapper.Map<Franchise>(franchiseUpdateRequest);
             var updatedFranchise = await _franchiseService.UpdateFranchise(franchise);
             if (updatedFranchise == null)
             {
@@ -72,8 +73,9 @@ namespace MovieCharactersApi.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [HttpPost]
         public async Task<ActionResult<FranchiseResponseDto>> PostFranchise(
-            Franchise franchise)
+            FranchiseCreateRequestDto franchiseCreateRequestDto)
         {
+            var franchise = _mapper.Map<Franchise>(franchiseCreateRequestDto);
             var createdFranchise = await _franchiseService.CreateFranchise(franchise);
             var franchiseResponseDto = _mapper.Map<FranchiseResponseDto>(createdFranchise);
 
